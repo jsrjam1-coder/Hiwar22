@@ -2,556 +2,460 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>وسيط — غرفة الوساطة</title>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الوسيط</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 <style>
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-:root{
-  --bg:#0d0f14;--surface:#151820;--surface2:#1c2130;
-  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.12);
-  --a:#3b82f6;--al:#93c5fd;--ab:#1d4ed8;
-  --b:#f59e0b;--bl:#fcd34d;--bb:#b45309;
-  --adm:#10b981;--adml:#6ee7b7;--admb:#065f46;
-  --red:#ef4444;--text:#e2e8f0;--muted:#64748b;--white:#fff;
-}
-body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);height:100dvh;overflow:hidden;display:flex;flex-direction:column}
-
-/* ── HEADER ── */
-.hdr{background:var(--surface);border-bottom:1px solid var(--border);padding:10px 16px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
-.hdr-title{font-size:15px;font-weight:800;color:var(--white);display:flex;align-items:center;gap:8px}
-.live-dot{width:8px;height:8px;background:var(--adm);border-radius:50%;box-shadow:0 0 8px var(--adm);animation:blink 2s infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
-.tags{display:flex;gap:6px}
-.tag{padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;border:1px solid}
-.tag-a{color:var(--al);border-color:rgba(59,130,246,.35);background:rgba(59,130,246,.1)}
-.tag-b{color:var(--bl);border-color:rgba(245,158,11,.35);background:rgba(245,158,11,.1)}
-.tag-adm{color:var(--adml);border-color:rgba(16,185,129,.35);background:rgba(16,185,129,.1)}
-
-/* ── TABS ── */
-.tabs{display:flex;background:var(--surface);border-bottom:1px solid var(--border);flex-shrink:0}
-.tab{flex:1;padding:10px 6px;font-size:11px;font-weight:700;color:var(--muted);cursor:pointer;border:none;background:none;font-family:inherit;border-bottom:2.5px solid transparent;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:5px}
-.tab.active{color:var(--white)}
-.tab.ta.active{border-color:var(--a)}
-.tab.tb.active{border-color:var(--b)}
-.tab.tadm.active{border-color:var(--adm)}
-.nbadge{background:var(--red);color:#fff;font-size:9px;font-weight:800;min-width:16px;height:16px;border-radius:8px;display:none;align-items:center;justify-content:center;padding:0 3px}
-.nbadge.on{display:inline-flex}
-
-/* ── VIEWS ── */
-.views{flex:1;overflow:hidden;display:flex;flex-direction:column}
-.view{display:none;flex-direction:column;flex:1;overflow:hidden}
-.view.active{display:flex}
-
-/* ── CHAT SCROLL ── */
-.chat{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:8px;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.08) transparent}
-.chat::-webkit-scrollbar{width:3px}
-.chat::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:3px}
-
-/* ── BUBBLES ── */
-.mrow{display:flex;gap:8px;animation:pop .22s ease}
-@keyframes pop{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-.mrow.me{flex-direction:row-reverse}
-.mrow.sys{justify-content:center}
-.ava{width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex-shrink:0;align-self:flex-end}
-.ava-a{background:rgba(59,130,246,.18);color:var(--al);border:1px solid rgba(59,130,246,.25)}
-.ava-b{background:rgba(245,158,11,.18);color:var(--bl);border:1px solid rgba(245,158,11,.25)}
-.ava-adm{background:rgba(16,185,129,.18);color:var(--adml);border:1px solid rgba(16,185,129,.25)}
-
-.bwrap{max-width:75%;display:flex;flex-direction:column}
-.mrow.me .bwrap{align-items:flex-end}
-
-.bbl{padding:10px 13px;border-radius:17px;font-size:13.5px;line-height:1.55;word-break:break-word}
-.bbl-a{background:rgba(59,130,246,.11);border:1px solid rgba(59,130,246,.18);border-bottom-right-radius:3px}
-.bbl-b{background:rgba(245,158,11,.11);border:1px solid rgba(245,158,11,.18);border-bottom-left-radius:3px}
-.bbl-adm{background:rgba(16,185,129,.11);border:1px solid rgba(16,185,129,.18);border-bottom-right-radius:3px}
-.bbl-me-a{background:linear-gradient(135deg,var(--ab),var(--a));color:#fff;border-bottom-left-radius:3px}
-.bbl-me-b{background:linear-gradient(135deg,var(--bb),var(--b));color:#fff;border-bottom-right-radius:3px}
-.bbl-me-adm{background:linear-gradient(135deg,var(--admb),var(--adm));color:#fff;border-bottom-left-radius:3px}
-.bbl.dim{opacity:.55;font-style:italic}
-
-/* edited badge on bubble */
-.edited-mark{font-size:10px;opacity:.65;margin-right:4px}
-
-.mmeta{font-size:10px;color:var(--muted);margin-top:3px;display:flex;align-items:center;gap:4px;flex-wrap:wrap}
-.mrow.me .mmeta{flex-direction:row-reverse}
-.sname{font-weight:700}
-.sna{color:var(--al)}.snb{color:var(--bl)}.snadm{color:var(--adml)}
-.mlabel{font-size:10px;font-weight:700;margin-top:2px;display:flex;align-items:center;gap:3px}
-.lbl-wait{color:var(--red)}
-.lbl-rej{color:#64748b}
-.lbl-edit{color:#a78bfa}
-
-.sysmsg{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:18px;padding:4px 13px;font-size:11px;color:var(--muted);text-align:center}
-
-/* ── PENDING PANEL (admin) ── */
-.panel{background:rgba(239,68,68,.04);border-top:1px solid rgba(239,68,68,.18);padding:10px 14px;flex-shrink:0;max-height:48%;overflow-y:auto}
-.panel-hdr{font-size:11px;font-weight:700;color:var(--red);margin-bottom:8px;display:flex;align-items:center;gap:6px}
-.pcnt{background:rgba(239,68,68,.18);padding:1px 7px;border-radius:8px;font-size:10px}
-.pitem{background:var(--surface2);border:1px solid rgba(239,68,68,.2);border-radius:13px;padding:11px 13px;margin-bottom:8px;animation:pop .2s ease}
-.pitem-meta{font-size:10px;color:var(--muted);margin-bottom:6px;display:flex;align-items:center;gap:5px;flex-wrap:wrap}
-.pitem-orig{font-size:12px;color:var(--muted);margin-bottom:4px;padding:6px 10px;background:rgba(255,255,255,.04);border-radius:8px;font-style:italic;border-right:2px solid var(--muted)}
-.pitem-edit{width:100%;background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.14);border-radius:10px;padding:9px 12px;color:var(--text);font-size:13.5px;font-family:inherit;outline:none;resize:none;direction:rtl;margin-bottom:8px;min-height:44px;max-height:100px;line-height:1.5;transition:border-color .2s}
-.pitem-edit:focus{border-color:var(--adml)}
-.pactions{display:flex;gap:7px}
-.btn-ok{flex:1;padding:9px;background:linear-gradient(135deg,var(--admb),var(--adm));border:none;border-radius:9px;color:#fff;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;transition:opacity .15s}
-.btn-ok:active{opacity:.8}
-.btn-no{padding:9px 14px;background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.25);border-radius:9px;color:#f87171;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;transition:opacity .15s}
-.btn-no:active{opacity:.8}
-.empty-p{text-align:center;color:var(--muted);font-size:12px;padding:8px 0;display:flex;align-items:center;justify-content:center;gap:5px}
-
-/* ── INPUT BAR ── */
-.ibar{display:flex;gap:8px;align-items:flex-end;padding:10px 14px;background:var(--surface);border-top:1px solid var(--border);flex-shrink:0}
-.ibar.ca{border-top-color:rgba(59,130,246,.28)}
-.ibar.cb{border-top-color:rgba(245,158,11,.28)}
-.ibar.cadm{border-top-color:rgba(16,185,129,.28)}
-.txta{flex:1;background:rgba(255,255,255,.06);border:1px solid var(--border);border-radius:13px;padding:11px 13px;color:var(--text);font-size:14px;font-family:inherit;outline:none;resize:none;min-height:42px;max-height:110px;line-height:1.4;direction:rtl;transition:border-color .2s}
-.txta::placeholder{color:var(--muted)}
-.txta:focus{border-color:rgba(255,255,255,.18)}
-.sbtn{width:42px;height:42px;border-radius:12px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;transition:transform .15s,opacity .15s;color:#fff}
-.sbtn:active{transform:scale(.92);opacity:.85}
-.sbtn-a{background:linear-gradient(135deg,var(--ab),var(--a))}
-.sbtn-b{background:linear-gradient(135deg,var(--bb),var(--b))}
-.sbtn-adm{background:linear-gradient(135deg,var(--admb),var(--adm))}
-.bbtn{padding:9px 12px;border-radius:12px;border:1px solid rgba(16,185,129,.28);background:rgba(16,185,129,.1);color:var(--adml);font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;transition:all .15s;height:42px}
-.bbtn:active{background:rgba(16,185,129,.2)}
-
-/* ── SETUP ── */
-.setup{position:fixed;inset:0;background:var(--bg);z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;gap:6px}
-.setup-icon{font-size:46px}
-.setup-title{font-size:22px;font-weight:900;color:var(--white)}
-.setup-sub{font-size:13px;color:var(--muted);text-align:center;margin-bottom:16px;line-height:1.6}
-.setup-card{width:100%;max-width:370px;background:var(--surface);border:1px solid var(--border2);border-radius:20px;padding:18px}
-.slabel{font-size:11px;font-weight:700;margin-bottom:5px;display:block}
-.sla{color:var(--al)}.slb{color:var(--bl)}.sladm{color:var(--adml)}
-.sinput{width:100%;background:rgba(255,255,255,.06);border:1px solid var(--border);border-radius:11px;padding:11px 13px;color:var(--text);font-size:14px;font-family:inherit;outline:none;direction:rtl;margin-bottom:12px;transition:border-color .2s}
-.sinput:focus{border-color:rgba(255,255,255,.2)}
-.sgo{width:100%;padding:14px;background:linear-gradient(135deg,var(--admb),var(--adm));border:none;border-radius:13px;color:#fff;font-size:15px;font-weight:800;cursor:pointer;font-family:inherit;transition:opacity .15s}
-.sgo:active{opacity:.85}
-.no-save-note{font-size:10px;color:var(--muted);text-align:center;margin-top:10px;display:flex;align-items:center;justify-content:center;gap:4px}
-
-/* ── EMPTY ── */
-.empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--muted);text-align:center;padding:20px;gap:8px}
-.empty .ico{font-size:38px}
-.empty p{font-size:12px;line-height:1.65}
-
-/* ── TOAST ── */
-.toast{position:fixed;bottom:85px;left:50%;transform:translateX(-50%) translateY(16px);background:#1e293b;color:#fff;padding:9px 18px;border-radius:11px;font-size:13px;font-weight:700;z-index:999;opacity:0;transition:all .25s;pointer-events:none;white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,.4)}
-.toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
-
-/* ── ADMIN TARGET MODAL ── */
-.tmodal{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(5px);z-index:300;display:flex;align-items:flex-end;opacity:0;pointer-events:none;transition:opacity .22s}
-.tmodal.open{opacity:1;pointer-events:all}
-.tsheet{width:100%;background:var(--surface);border-radius:22px 22px 0 0;padding:0 0 calc(env(safe-area-inset-bottom,0px) + 16px);transform:translateY(100%);transition:transform .28s cubic-bezier(.34,1.56,.64,1)}
-.tmodal.open .tsheet{transform:translateY(0)}
-.tsh-handle{width:36px;height:3px;background:#334155;border-radius:2px;margin:10px auto 0}
-.tsh-title{font-size:15px;font-weight:800;color:var(--white);padding:14px 18px 10px;border-bottom:1px solid var(--border)}
-.tsh-body{padding:14px 18px;display:flex;flex-direction:column;gap:8px}
-.topt{display:flex;align-items:center;gap:12px;padding:13px 14px;border-radius:13px;border:1px solid var(--border);cursor:pointer;transition:background .15s;font-size:14px;font-weight:700}
-.topt:active{background:rgba(255,255,255,.06)}
-.topt-icon{font-size:20px}
-.topt.oa{border-color:rgba(59,130,246,.28);color:var(--al)}
-.topt.ob{border-color:rgba(245,158,11,.28);color:var(--bl)}
-.topt.oall{border-color:rgba(16,185,129,.28);color:var(--adml)}
+:root{--bg:#0a0a0f;--surface:#12121a;--surface2:#1a1a26;--border:#2a2a3a;--text:#e8e8f0;--text2:#8888aa;--admin:#f7971e;--pa:#6c63ff;--pb:#43e97b;--danger:#ff6584;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+.screen{display:none;min-height:100vh;}
+.screen.active{display:flex;flex-direction:column;}
+#screen-config,#screen-closed,#screen-waiting{align-items:center;justify-content:center;padding:24px;background:radial-gradient(ellipse at 20% 20%,#1a1040 0%,var(--bg) 60%);}
+.config-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:28px 24px;width:100%;max-width:420px;}
+.config-title{font-size:22px;font-weight:900;color:var(--admin);margin-bottom:6px;}
+.config-sub{font-size:13px;color:var(--text2);margin-bottom:18px;line-height:1.6;}
+.steps{background:var(--bg);border-radius:12px;padding:14px;margin-bottom:18px;border:1px solid var(--border);}
+.steps-title{font-size:12px;font-weight:700;color:var(--admin);margin-bottom:8px;}
+.step{font-size:12px;color:var(--text2);padding:3px 0;display:flex;gap:8px;}
+.step b{color:var(--text);}
+.step-n{color:var(--admin);font-weight:700;flex-shrink:0;}
+.field{margin-bottom:13px;}
+.field label{font-size:12px;color:var(--text2);font-weight:700;display:block;margin-bottom:5px;}
+.field input{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:11px 14px;color:var(--text);font-family:'Tajawal',sans-serif;font-size:13px;direction:ltr;transition:border-color 0.2s;}
+.field input:focus{outline:none;border-color:var(--admin);}
+.btn-orange{width:100%;padding:14px;border-radius:12px;border:none;background:var(--admin);color:#0a0a0f;font-family:'Tajawal',sans-serif;font-size:16px;font-weight:900;cursor:pointer;transition:opacity 0.2s;}
+.btn-orange:hover{opacity:0.85;}
+.config-note{font-size:11px;color:var(--text2);text-align:center;margin-top:10px;}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;}
+.topbar-logo{font-size:20px;font-weight:900;}
+.topbar-logo span{background:linear-gradient(135deg,var(--pa),var(--danger));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.live-dot{display:inline-block;width:7px;height:7px;background:var(--pb);border-radius:50%;margin-right:4px;animation:pulse 1.5s infinite;vertical-align:middle;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.2}}
+.badge{padding:5px 13px;border-radius:20px;font-size:12px;font-weight:700;}
+.badge.admin{background:rgba(247,151,30,0.15);color:var(--admin);border:1px solid rgba(247,151,30,0.3);}
+.badge.pa{background:rgba(108,99,255,0.15);color:var(--pa);border:1px solid rgba(108,99,255,0.3);}
+.badge.pb{background:rgba(67,233,123,0.15);color:var(--pb);border:1px solid rgba(67,233,123,0.3);}
+.main{flex:1;padding:16px;max-width:600px;margin:0 auto;width:100%;}
+.room-box{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:18px;}
+.box-title{font-size:13px;font-weight:700;color:var(--text2);margin-bottom:14px;letter-spacing:1px;}
+.create-btn{width:100%;padding:14px;border-radius:12px;border:none;background:var(--admin);color:#0a0a0f;font-family:'Tajawal',sans-serif;font-size:15px;font-weight:900;cursor:pointer;transition:all 0.2s;margin-bottom:10px;}
+.create-btn:hover{opacity:0.85;transform:translateY(-1px);}
+.active-room{background:var(--bg);border-radius:12px;padding:14px;border:1px solid rgba(247,151,30,0.3);}
+.ar-label{font-size:11px;color:var(--admin);font-weight:700;letter-spacing:1px;margin-bottom:10px;}
+.link-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.link-tag{font-size:11px;font-weight:700;padding:4px 10px;border-radius:8px;flex-shrink:0;min-width:72px;text-align:center;}
+.link-tag.a{background:rgba(108,99,255,0.15);color:var(--pa);}
+.link-tag.b{background:rgba(67,233,123,0.15);color:var(--pb);}
+.link-box{flex:1;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:7px 10px;font-size:11px;color:var(--text2);direction:ltr;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.copy-btn{background:var(--surface2);border:1px solid var(--border);color:var(--text2);padding:6px 10px;border-radius:8px;font-size:11px;cursor:pointer;font-family:'Tajawal',sans-serif;font-weight:700;flex-shrink:0;transition:all 0.2s;}
+.copy-btn:hover{border-color:var(--admin);color:var(--admin);}
+.close-room-btn{width:100%;margin-top:12px;padding:11px;border-radius:10px;border:1px solid rgba(255,101,132,0.3);background:rgba(255,101,132,0.1);color:var(--danger);font-family:'Tajawal',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:all 0.2s;}
+.close-room-btn:hover{background:rgba(255,101,132,0.2);}
+.no-room{text-align:center;color:var(--text2);font-size:13px;padding:8px 0;}
+.tabs{display:flex;gap:6px;margin-bottom:14px;background:var(--surface);border-radius:14px;padding:5px;border:1px solid var(--border);}
+.tab{flex:1;padding:9px;border-radius:10px;border:none;font-family:'Tajawal',sans-serif;font-size:13px;font-weight:600;cursor:pointer;background:transparent;color:var(--text2);position:relative;transition:all 0.2s;}
+.tab.active{background:var(--surface2);color:var(--text);}
+.tab-badge{position:absolute;top:3px;left:3px;background:var(--danger);color:white;font-size:10px;font-weight:700;width:17px;height:17px;border-radius:50%;display:none;align-items:center;justify-content:center;}
+.msg-list{display:flex;flex-direction:column;gap:10px;}
+.msg-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px 16px;animation:fadeIn 0.3s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.msg-card.pending{border-color:rgba(247,151,30,0.4);}
+.msg-card.approved{border-color:rgba(67,233,123,0.3);}
+.msg-card.rejected{border-color:rgba(255,101,132,0.3);opacity:0.55;}
+.msg-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.msg-from{display:flex;align-items:center;gap:7px;font-size:13px;font-weight:600;}
+.dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.dot.a{background:var(--pa);}
+.dot.b{background:var(--pb);}
+.msg-status{font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;}
+.msg-status.pending{background:rgba(247,151,30,0.15);color:var(--admin);}
+.msg-status.approved{background:rgba(67,233,123,0.15);color:var(--pb);}
+.msg-status.rejected{background:rgba(255,101,132,0.15);color:var(--danger);}
+.msg-text{font-size:15px;line-height:1.65;color:var(--text);background:var(--bg);border-radius:10px;padding:11px 13px;margin-bottom:8px;}
+.msg-original{font-size:12px;color:var(--text2);background:var(--surface2);border-radius:8px;padding:8px 10px;margin-bottom:8px;border-right:2px solid rgba(247,151,30,0.4);}
+.msg-time{font-size:11px;color:var(--text2);text-align:left;}
+.admin-edit{width:100%;background:var(--bg);border:1px solid rgba(108,99,255,0.4);border-radius:10px;padding:10px 12px;color:var(--text);font-family:'Tajawal',sans-serif;font-size:14px;resize:none;min-height:70px;margin-bottom:10px;direction:rtl;}
+.admin-edit:focus{outline:none;border-color:var(--pa);}
+.admin-actions{display:flex;gap:8px;}
+.act-btn{flex:1;padding:10px;border-radius:10px;border:none;font-family:'Tajawal',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all 0.2s;}
+.act-btn.approve{background:rgba(67,233,123,0.15);color:var(--pb);border:1px solid rgba(67,233,123,0.4);}
+.act-btn.reject{background:rgba(255,101,132,0.15);color:var(--danger);border:1px solid rgba(255,101,132,0.4);}
+.act-btn:hover{opacity:0.8;transform:translateY(-1px);}
+.compose-box{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:14px;}
+.compose-title{font-size:13px;font-weight:700;color:var(--text2);margin-bottom:12px;}
+.compose-ta{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:14px;color:var(--text);font-family:'Tajawal',sans-serif;font-size:15px;resize:none;min-height:100px;direction:rtl;transition:border-color 0.2s;}
+.compose-ta:focus{outline:none;border-color:var(--pa);}
+.send-btn{margin-top:12px;width:100%;padding:14px;border-radius:12px;border:none;font-family:'Tajawal',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:all 0.25s;}
+.send-btn.a{background:var(--pa);color:white;}
+.send-btn.b{background:var(--pb);color:#0a0a0f;}
+.send-btn:hover{opacity:0.85;transform:translateY(-1px);}
+.send-btn:disabled{opacity:0.4;cursor:not-allowed;transform:none;}
+.notice{background:rgba(108,99,255,0.08);border:1px solid rgba(108,99,255,0.2);border-radius:12px;padding:10px 14px;font-size:13px;color:var(--text2);margin-bottom:14px;text-align:center;}
+.sec-lbl{font-size:12px;font-weight:700;color:var(--text2);letter-spacing:2px;margin:16px 0 10px;}
+.empty{text-align:center;padding:36px 20px;color:var(--text2);}
+.empty-icon{font-size:38px;margin-bottom:10px;}
+.empty-text{font-size:14px;}
+.big-icon{font-size:60px;margin-bottom:20px;}
+.big-title{font-size:22px;font-weight:900;margin-bottom:8px;}
+.big-sub{font-size:14px;color:var(--text2);line-height:1.7;text-align:center;}
+#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:12px 22px;font-size:14px;color:var(--text);z-index:9999;transition:transform 0.3s ease;white-space:nowrap;box-shadow:0 8px 24px rgba(0,0,0,0.4);}
+#toast.show{transform:translateX(-50%) translateY(0);}
+#toast.success{border-color:rgba(67,233,123,0.5);color:var(--pb);}
+#toast.error{border-color:rgba(255,101,132,0.5);color:var(--danger);}
+@media(min-width:600px){.main{padding:24px;}}
 </style>
 </head>
 <body>
 
-<!-- SETUP -->
-<div class="setup" id="setup">
-  <div class="setup-icon">🤝</div>
-  <div class="setup-title">وسيط</div>
-  <div class="setup-sub">غرفة محادثة بإشراف مباشر<br>كل رسالة تمر عبر المشرف قبل وصولها</div>
-  <div class="setup-card">
-    <span class="slabel sla">👤 اسم الطرف الأول</span>
-    <input class="sinput" id="na" placeholder="مثال: أحمد" maxlength="20">
-    <span class="slabel slb">👤 اسم الطرف الثاني</span>
-    <input class="sinput" id="nb" placeholder="مثال: محمد" maxlength="20">
-    <span class="slabel sladm">🛡️ اسم المشرف</span>
-    <input class="sinput" id="nadm" placeholder="مثال: المشرف" maxlength="20" style="margin-bottom:4px">
-    <button class="sgo" onclick="startSession()">🚀 بدء الجلسة</button>
-    <div class="no-save-note">🔒 الجلسة مؤقتة — لا يتم حفظ أي بيانات</div>
+<!-- CONFIG -->
+<div class="screen active" id="screen-config">
+  <div class="config-card">
+    <div class="config-title">⚙️ إعداد Firebase</div>
+    <div class="config-sub">أدخل بيانات مشروعك — مرة واحدة فقط</div>
+    <div class="steps">
+      <div class="steps-title">📋 كيف تحصل على البيانات:</div>
+      <div class="step"><span class="step-n">1.</span><span>اذهب إلى <b>console.firebase.google.com</b></span></div>
+      <div class="step"><span class="step-n">2.</span><span>أنشئ مشروعاً جديداً</span></div>
+      <div class="step"><span class="step-n">3.</span><span>من القائمة الجانبية اختر <b>Realtime Database</b></span></div>
+      <div class="step"><span class="step-n">4.</span><span>اضغط <b>Create Database</b> ← اختر <b>Test Mode</b></span></div>
+      <div class="step"><span class="step-n">5.</span><span>انسخ <b>Database URL</b> من الصفحة</span></div>
+      <div class="step"><span class="step-n">6.</span><span>من <b>Project Settings ← General</b> انسخ <b>API Key</b></span></div>
+    </div>
+    <div class="field"><label>🔑 API Key</label><input id="cfg-key" placeholder="AIzaSy..." type="text"></div>
+    <div class="field"><label>🌐 Database URL</label><input id="cfg-url" placeholder="https://your-app-default-rtdb.firebaseio.com" type="text"></div>
+    <div class="field"><label>📁 Project ID</label><input id="cfg-pid" placeholder="your-project-id" type="text"></div>
+    <button class="btn-orange" onclick="saveConfig()">✓ حفظ والبدء</button>
+    <div class="config-note">تُحفظ الإعدادات في متصفحك فقط ولا تُرسل لأي مكان</div>
   </div>
 </div>
 
-<!-- HEADER -->
-<div class="hdr">
-  <div class="hdr-title"><div class="live-dot"></div><span id="htitle">وسيط</span></div>
-  <div class="tags">
-    <span class="tag tag-a"  id="tgA">أ</span>
-    <span class="tag tag-b"  id="tgB">ب</span>
-    <span class="tag tag-adm" id="tgAdm">م</span>
+<!-- ADMIN -->
+<div class="screen" id="screen-admin">
+  <div class="topbar">
+    <div class="topbar-logo"><span>الوسيط</span> <span class="live-dot"></span></div>
+    <span class="badge admin">🛡️ المشرف</span>
+  </div>
+  <div class="main">
+    <div class="room-box">
+      <div class="box-title">🚪 إدارة الغرفة</div>
+      <div id="room-controls"></div>
+    </div>
+    <div id="admin-msgs"></div>
   </div>
 </div>
 
-<!-- TABS -->
-<div class="tabs">
-  <button class="tab ta active" id="tabA" onclick="sw('a')"><span id="tlA">الطرف الأول</span><span class="nbadge" id="bdgA"></span></button>
-  <button class="tab tb"        id="tabB" onclick="sw('b')"><span id="tlB">الطرف الثاني</span><span class="nbadge" id="bdgB"></span></button>
-  <button class="tab tadm"      id="tabAdm" onclick="sw('adm')">🛡️ <span id="tlAdm">المشرف</span><span class="nbadge" id="bdgAdm"></span></button>
+<!-- PARTY -->
+<div class="screen" id="screen-party">
+  <div class="topbar">
+    <div class="topbar-logo"><span>الوسيط</span> <span class="live-dot"></span></div>
+    <span class="badge" id="party-badge"></span>
+  </div>
+  <div class="main" id="party-main"></div>
 </div>
 
-<!-- VIEWS -->
-<div class="views">
-
-  <!-- A -->
-  <div class="view active" id="vA">
-    <div class="chat" id="chatA">
-      <div class="empty"><div class="ico">💬</div><p>لا توجد رسائل بعد<br>أرسل رسالة وانتظر موافقة المشرف</p></div>
-    </div>
-    <div class="ibar ca">
-      <textarea class="txta" id="inA" placeholder="رسالتك..." rows="1" oninput="ar(this)" onkeydown="hk(event,'a')"></textarea>
-      <button class="sbtn sbtn-a" onclick="send('a')">↑</button>
-    </div>
-  </div>
-
-  <!-- B -->
-  <div class="view" id="vB">
-    <div class="chat" id="chatB">
-      <div class="empty"><div class="ico">💬</div><p>لا توجد رسائل بعد<br>أرسل رسالة وانتظر موافقة المشرف</p></div>
-    </div>
-    <div class="ibar cb">
-      <textarea class="txta" id="inB" placeholder="رسالتك..." rows="1" oninput="ar(this)" onkeydown="hk(event,'b')"></textarea>
-      <button class="sbtn sbtn-b" onclick="send('b')">↑</button>
-    </div>
-  </div>
-
-  <!-- ADMIN -->
-  <div class="view" id="vAdm">
-    <div class="chat" id="chatAdm">
-      <div class="empty"><div class="ico">🛡️</div><p>هنا تظهر كل الرسائل<br>المعتمدة والمرفوضة والمعدَّلة</p></div>
-    </div>
-
-    <!-- PENDING PANEL -->
-    <div class="panel">
-      <div class="panel-hdr">⏳ بانتظار القرار <span class="pcnt" id="pcnt">0</span></div>
-      <div id="plist"><div class="empty-p">✅ لا توجد رسائل معلقة</div></div>
-    </div>
-
-    <!-- ADMIN INPUT -->
-    <div class="ibar cadm">
-      <textarea class="txta" id="inAdm" placeholder="رسالة المشرف..." rows="1" oninput="ar(this)" onkeydown="hk(event,'adm')"></textarea>
-      <button class="bbtn" onclick="openTarget()">📨 إرسال</button>
-    </div>
-  </div>
-
+<!-- CLOSED -->
+<div class="screen" id="screen-closed">
+  <div class="big-icon">🔒</div>
+  <div class="big-title">الغرفة مغلقة</div>
+  <div class="big-sub">انتهت الجلسة وتم حذف جميع البيانات<br>تواصل مع المشرف للحصول على رابط جديد</div>
 </div>
 
-<!-- TARGET MODAL -->
-<div class="tmodal" id="tmodal" onclick="closeTModal()">
-  <div class="tsheet" onclick="event.stopPropagation()">
-    <div class="tsh-handle"></div>
-    <div class="tsh-title">إرسال رسالة المشرف إلى...</div>
-    <div class="tsh-body">
-      <div class="topt oa" onclick="sendAdm(['a'])"><span class="topt-icon">👤</span><span id="toA">الطرف الأول</span></div>
-      <div class="topt ob" onclick="sendAdm(['b'])"><span class="topt-icon">👤</span><span id="toB">الطرف الثاني</span></div>
-      <div class="topt oall" onclick="sendAdm(['a','b'])"><span class="topt-icon">📢</span>للطرفين معاً</div>
-    </div>
-  </div>
+<!-- WAITING -->
+<div class="screen" id="screen-waiting">
+  <div class="big-icon">⛔</div>
+  <div class="big-title">رابط غير صالح</div>
+  <div class="big-sub">هذا الرابط غير صحيح أو انتهت صلاحيته<br>تواصل مع المشرف للحصول على رابط جديد</div>
 </div>
 
-<div class="toast" id="toast"></div>
+<div id="toast"></div>
 
-<script>
-// ══════════════════════════════════════════
-//  STATE — كل شيء في الذاكرة فقط، لا localStorage
-// ══════════════════════════════════════════
-let N = { a:'الطرف أ', b:'الطرف ب', adm:'المشرف' };
-let msgs    = [];   // { id, from, text, origText, edited, time, status, visibleTo }
-let queue   = [];   // pending messages
-let uid     = 0;
-let curView = 'a';
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase, ref, push, set, onValue, update, remove } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
-// ══════════════════════════════════════════
-//  SETUP
-// ══════════════════════════════════════════
-function startSession() {
-  const a   = document.getElementById('na').value.trim();
-  const b   = document.getElementById('nb').value.trim();
-  const adm = document.getElementById('nadm').value.trim();
-  if (!a || !b || !adm) { toast('⚠️ أدخل جميع الأسماء'); return; }
+const ADMIN_KEY = "8368";
+const SAVE_KEY  = "wasit_cfg_v3";
 
-  N = { a, b, adm };
-  document.getElementById('htitle').textContent   = 'جلسة وساطة';
-  document.getElementById('tgA').textContent      = a;
-  document.getElementById('tgB').textContent      = b;
-  document.getElementById('tgAdm').textContent    = '🛡️ ' + adm;
-  document.getElementById('tlA').textContent      = a;
-  document.getElementById('tlB').textContent      = b;
-  document.getElementById('tlAdm').textContent    = adm;
-  document.getElementById('toA').textContent      = a;
-  document.getElementById('toB').textContent      = b;
-  document.getElementById('inA').placeholder      = 'رسالة ' + a + '...';
-  document.getElementById('inB').placeholder      = 'رسالة ' + b + '...';
-  document.getElementById('setup').style.display  = 'none';
+let db, listeners = [], adminTab = "pending", msgUnsub = null, partyReady = false;
 
-  sysMsg('بدأت الجلسة — كل رسالة تمر عبر ' + adm + ' قبل وصولها');
+// UTILS
+const esc = s => (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/\n/g,"<br>");
+const fmt = ts => { try{ return new Date(ts).toLocaleString("ar-SA",{hour:"2-digit",minute:"2-digit",day:"numeric",month:"short"}); }catch{ return ""; } };
+const rand = () => Math.random().toString(36).substr(2,6).toUpperCase();
+
+function toast(msg, type=""){
+  const t=document.getElementById("toast");
+  t.textContent=msg; t.className="show "+type;
+  clearTimeout(t._timer);
+  t._timer=setTimeout(()=>{ t.className=type; },3000);
 }
 
-// ══════════════════════════════════════════
-//  SEND (party)
-// ══════════════════════════════════════════
-function send(party) {
-  const el   = document.getElementById('in' + cap(party));
-  const text = el.value.trim();
-  if (!text) return;
-  el.value = ''; ar(el);
-
-  const m = mk(party, text, 'pending', [party, 'adm']);
-  msgs.push(m);
-  queue.push(m);
-  renderAll();
-  updateBadge('adm');
-  toast('📨 بانتظار موافقة ' + N.adm);
+function show(id){
+  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
 }
 
-// ══════════════════════════════════════════
-//  ADMIN SEND
-// ══════════════════════════════════════════
-function openTarget() {
-  const text = document.getElementById('inAdm').value.trim();
-  if (!text) return;
-  document.getElementById('tmodal').classList.add('open');
+function clearAll(){ listeners.forEach(l=>l()); listeners=[]; if(msgUnsub){ msgUnsub(); msgUnsub=null; } }
+
+// CONFIG
+function getSaved(){ try{ return JSON.parse(localStorage.getItem(SAVE_KEY)); }catch{ return null; } }
+
+window.saveConfig = function(){
+  const cfg={
+    apiKey: document.getElementById("cfg-key").value.trim(),
+    databaseURL: document.getElementById("cfg-url").value.trim(),
+    projectId: document.getElementById("cfg-pid").value.trim(),
+  };
+  if(!cfg.apiKey||!cfg.databaseURL){ toast("يرجى إدخال API Key و Database URL","error"); return; }
+  cfg.authDomain=cfg.projectId+".firebaseapp.com";
+  localStorage.setItem(SAVE_KEY,JSON.stringify(cfg));
+  boot(cfg);
+};
+
+function boot(cfg){
+  try{
+    const app=initializeApp(cfg);
+    db=getDatabase(app);
+    toast("✓ تم الاتصال بـ Firebase","success");
+    route();
+  }catch(e){ toast("خطأ: "+e.message,"error"); }
 }
-function closeTModal() { document.getElementById('tmodal').classList.remove('open'); }
 
-function sendAdm(toList) {
-  const el   = document.getElementById('inAdm');
-  const text = el.value.trim();
-  if (!text) return;
-  el.value = ''; ar(el);
-  closeTModal();
+// ROUTING
+function route(){
+  const p=new URLSearchParams(location.search);
+  const role=p.get("role"), room=p.get("room"), key=p.get("key");
 
-  const m = mk('adm', text, 'approved', [...toList, 'adm']);
-  msgs.push(m);
-  renderAll();
-  toast('✅ أُرسلت لـ ' + toList.map(x => N[x]).join(' و '));
-}
-
-// ══════════════════════════════════════════
-//  APPROVE / EDIT+APPROVE / REJECT
-// ══════════════════════════════════════════
-function approve(id) {
-  const m = msgs.find(x => x.id === id);
-  if (!m) return;
-  const editEl = document.getElementById('ed-' + id);
-  const newText = editEl ? editEl.value.trim() : m.text;
-
-  if (newText && newText !== m.origText) {
-    m.edited = true;
-    m.text   = newText;
+  if(role==="admin" && key===ADMIN_KEY){
+    show("screen-admin"); initAdmin(); return;
   }
-  m.status    = 'approved';
-  const other = m.from === 'a' ? 'b' : 'a';
-  m.visibleTo = [m.from, 'adm', other];
-
-  queue = queue.filter(x => x.id !== id);
-  renderAll();
-  toast(m.edited ? '✏️ تم التعديل والإرسال' : '✅ تمت الموافقة والإرسال');
+  if((role==="party_a"||role==="party_b") && room){
+    enterRoom(room,role); return;
+  }
+  show("screen-waiting");
 }
 
-function reject(id) {
-  const m = msgs.find(x => x.id === id);
-  if (!m) return;
-  m.status    = 'rejected';
-  m.visibleTo = [m.from, 'adm'];
-
-  queue = queue.filter(x => x.id !== id);
-  renderAll();
-  toast('🚫 تم رفض الرسالة');
+// ADMIN
+function initAdmin(){
+  const unsub=onValue(ref(db,"rooms"), snap=>{
+    let activeId=null;
+    snap.forEach(c=>{ if(c.val().status==="active") activeId=c.key; });
+    renderRoomControls(activeId);
+    if(activeId) renderAdminMsgs(activeId);
+    else document.getElementById("admin-msgs").innerHTML="";
+  });
+  listeners.push(unsub);
 }
 
-// ══════════════════════════════════════════
-//  RENDER
-// ══════════════════════════════════════════
-function renderAll() {
-  renderChat('a'); renderChat('b'); renderAdmView();
-}
-
-function renderChat(p) {
-  const el  = document.getElementById('chat' + cap(p));
-  const vis = msgs.filter(m => m.visibleTo.includes(p));
-  if (!vis.length) {
-    el.innerHTML = `<div class="empty"><div class="ico">💬</div><p>لا توجد رسائل بعد<br>أرسل رسالة وانتظر موافقة ${N.adm}</p></div>`;
+function renderRoomControls(roomId){
+  const el=document.getElementById("room-controls");
+  if(!roomId){
+    el.innerHTML=`<button class="create-btn" onclick="createRoom()">＋ إنشاء غرفة جديدة</button><div class="no-room">لا توجد غرفة نشطة حالياً</div>`;
     return;
   }
-  el.innerHTML = vis.map(m => bubble(m, p)).join('');
-  el.scrollTop = el.scrollHeight;
-}
-
-function bubble(m, viewer) {
-  const mine  = m.from === viewer;
-  const fn    = N[m.from];
-  const { ac, bc, sc, av } = cls(m.from, mine);
-
-  const editedMark = m.edited ? `<span class="edited-mark">(معدَّلة)</span>` : '';
-
-  let label = '';
-  if (m.status === 'pending' && mine)
-    label = `<div class="mlabel lbl-wait">⏳ بانتظار موافقة ${N.adm}</div>`;
-  if (m.status === 'rejected' && mine)
-    label = `<div class="mlabel lbl-rej">🚫 رُفضت هذه الرسالة</div>`;
-  if (m.edited && !mine && m.from !== 'adm')
-    label += `<div class="mlabel lbl-edit">✏️ عُدِّلت من قِبل ${N.adm}</div>`;
-  if (m.from === 'adm' && !mine)
-    label += `<div class="mlabel" style="color:var(--adml)">🛡️ من ${N.adm}</div>`;
-
-  return `
-    <div class="mrow ${mine?'me':''}">
-      <div class="ava ${ac}">${av}</div>
-      <div class="bwrap">
-        <div class="bbl ${bc} ${m.status==='pending'?'dim':''}">${esc(m.text)}${editedMark}</div>
-        <div class="mmeta">
-          <span class="sname ${sc}">${fn}</span>
-          <span>${m.time}</span>
-        </div>
-        ${label}
+  const base=location.origin+location.pathname;
+  const lA=base+"?room="+roomId+"&role=party_a";
+  const lB=base+"?room="+roomId+"&role=party_b";
+  el.innerHTML=`
+    <div class="active-room">
+      <div class="ar-label">● الغرفة النشطة: ${roomId}</div>
+      <div class="link-row">
+        <span class="link-tag a">الطرف الأول</span>
+        <div class="link-box">${lA}</div>
+        <button class="copy-btn" onclick="copyLink('${lA}','✓ تم نسخ رابط الطرف الأول')">نسخ</button>
       </div>
+      <div class="link-row">
+        <span class="link-tag b">الطرف الثاني</span>
+        <div class="link-box">${lB}</div>
+        <button class="copy-btn" onclick="copyLink('${lB}','✓ تم نسخ رابط الطرف الثاني')">نسخ</button>
+      </div>
+      <button class="close-room-btn" onclick="closeRoom('${roomId}')">🔒 إغلاق الغرفة وحذف كل البيانات</button>
     </div>`;
 }
 
-function renderAdmView() {
-  // full log
-  const ce  = document.getElementById('chatAdm');
-  const vis = msgs.filter(m => m.visibleTo.includes('adm'));
-  if (!vis.length) {
-    ce.innerHTML = `<div class="empty"><div class="ico">🛡️</div><p>هنا تظهر كل الرسائل<br>المعتمدة والمرفوضة والمعدَّلة</p></div>`;
-  } else {
-    ce.innerHTML = vis.map(m => admBubble(m)).join('');
-    ce.scrollTop = ce.scrollHeight;
-  }
+window.createRoom = async function(){
+  const id=rand();
+  await set(ref(db,"rooms/"+id),{ status:"active", createdAt:Date.now() });
+  toast("✓ تم إنشاء الغرفة: "+id,"success");
+};
 
-  // pending queue
-  document.getElementById('pcnt').textContent = queue.length;
-  const pl = document.getElementById('plist');
-  if (!queue.length) {
-    pl.innerHTML = '<div class="empty-p">✅ لا توجد رسائل معلقة</div>';
-    return;
-  }
+window.closeRoom = async function(roomId){
+  if(!confirm("هل أنت متأكد؟ سيتم إغلاق الغرفة وحذف جميع الرسائل نهائياً.")) return;
+  await update(ref(db,"rooms/"+roomId),{ status:"closed" });
+  await remove(ref(db,"rooms/"+roomId+"/messages"));
+  setTimeout(()=>remove(ref(db,"rooms/"+roomId)), 2500);
+  toast("🔒 تم إغلاق الغرفة","success");
+};
 
-  pl.innerHTML = queue.map(m => {
-    const fn  = N[m.from];
-    const tn  = N[m.from === 'a' ? 'b' : 'a'];
-    const sc  = m.from === 'a' ? 'sna' : 'snb';
-    return `
-      <div class="pitem">
-        <div class="pitem-meta">
-          <span class="sname ${sc}">${fn}</span>
-          <span>→</span>
-          <span>${tn}</span>
-          <span style="margin-right:auto">${m.time}</span>
-        </div>
-        <div class="pitem-orig">النص الأصلي: ${esc(m.origText)}</div>
-        <textarea class="pitem-edit" id="ed-${m.id}" oninput="ar(this)">${esc(m.origText)}</textarea>
-        <div class="pactions">
-          <button class="btn-ok" onclick="approve(${m.id})">✅ موافقة وإرسال</button>
-          <button class="btn-no" onclick="reject(${m.id})">🚫 رفض</button>
-        </div>
-      </div>`;
-  }).join('');
-}
+window.copyLink = function(link, msg){
+  navigator.clipboard.writeText(link).then(()=>toast(msg,"success")).catch(()=>{
+    const ta=document.createElement("textarea");
+    ta.value=link; document.body.appendChild(ta); ta.select();
+    document.execCommand("copy"); document.body.removeChild(ta);
+    toast(msg,"success");
+  });
+};
 
-function admBubble(m) {
-  const fn = N[m.from];
-  const { ac, bc, sc, av } = cls(m.from, false);
-  const si  = m.status==='approved'?'✅':m.status==='rejected'?'🚫':'⏳';
-  const sc2 = m.status==='approved'?'#10b981':m.status==='rejected'?'#ef4444':'#f59e0b';
-  const to  = m.status==='approved' && m.from!=='adm' ? ` → ${N[m.from==='a'?'b':'a']}` : '';
-  const editedMark = m.edited ? ' <span style="color:#a78bfa;font-size:10px">(معدَّلة)</span>' : '';
+function renderAdminMsgs(roomId){
+  document.getElementById("admin-msgs").innerHTML=`
+    <div class="tabs">
+      <button class="tab ${adminTab==="pending"?"active":""}" onclick="switchTab('pending','${roomId}')">
+        ⏳ بانتظار المراجعة
+        <span class="tab-badge" id="pb">0</span>
+      </button>
+      <button class="tab ${adminTab==="all"?"active":""}" onclick="switchTab('all','${roomId}')">📋 جميع الرسائل</button>
+    </div>
+    <div class="msg-list" id="admin-list"></div>`;
 
-  return `
-    <div class="mrow">
-      <div class="ava ${ac}">${av}</div>
-      <div class="bwrap">
-        <div class="bbl ${bc}">${esc(m.text)}${m.edited?'<span class="edited-mark">(✏️)</span>':''}</div>
-        <div class="mmeta">
-          <span class="sname ${sc}">${fn}${to}</span>
-          <span>${m.time}</span>
-          <span style="color:${sc2};font-weight:700">${si}</span>
-          ${editedMark}
-        </div>
-      </div>
-    </div>`;
-}
-
-// ══════════════════════════════════════════
-//  SYSTEM MSG
-// ══════════════════════════════════════════
-function sysMsg(txt) {
-  const s = `<div class="sysmsg">${txt}</div>`;
-  ['chatA','chatB','chatAdm'].forEach(id => {
-    const c = document.getElementById(id);
-    if (c.querySelector('.empty')) c.innerHTML = '';
-    c.insertAdjacentHTML('beforeend', s);
+  if(msgUnsub){ msgUnsub(); }
+  msgUnsub=onValue(ref(db,"rooms/"+roomId+"/messages"), snap=>{
+    const msgs=[];
+    snap.forEach(c=>msgs.push({id:c.key,...c.val()}));
+    msgs.sort((a,b)=>b.createdAt-a.createdAt);
+    const pending=msgs.filter(m=>m.status==="pending");
+    const pb=document.getElementById("pb");
+    if(pb){ pb.style.display=pending.length?"flex":"none"; pb.textContent=pending.length; }
+    const list=adminTab==="pending"?pending:msgs;
+    const el=document.getElementById("admin-list");
+    if(!el) return;
+    if(!list.length){
+      el.innerHTML=`<div class="empty"><div class="empty-icon">${adminTab==="pending"?"✅":"📭"}</div><div class="empty-text">${adminTab==="pending"?"لا توجد رسائل بانتظار المراجعة":"لا توجد رسائل"}</div></div>`;
+      return;
+    }
+    el.innerHTML=list.map(m=>{
+      const fl=m.senderId==="party_a"?"الطرف الأول":"الطرف الثاني";
+      const tl=m.receiverId==="party_a"?"الطرف الأول":"الطرف الثاني";
+      const fc=m.senderId==="party_a"?"a":"b";
+      const sm={pending:"⏳ انتظار",approved:"✓ تم الإرسال",rejected:"✗ مرفوض"};
+      const mod=m.status==="approved"&&m.originalText!==m.modifiedText;
+      let act="";
+      if(m.status==="pending") act=`
+        <textarea class="admin-edit" id="e-${m.id}">${esc(m.originalText)}</textarea>
+        <div class="admin-actions">
+          <button class="act-btn approve" onclick="adminAct('${roomId}','${m.id}','approved')">✓ موافقة وإرسال</button>
+          <button class="act-btn reject" onclick="adminAct('${roomId}','${m.id}','rejected')">✗ رفض</button>
+        </div>`;
+      else if(mod) act=`<div class="msg-original">✏️ الأصلي: ${esc(m.originalText)}</div>`;
+      return `
+        <div class="msg-card ${m.status}">
+          <div class="msg-header">
+            <div class="msg-from"><div class="dot ${fc}"></div><span>${fl} ← → ${tl}</span></div>
+            <span class="msg-status ${m.status}">${sm[m.status]||m.status}</span>
+          </div>
+          <div class="msg-text">${esc(m.status==="approved"?(m.modifiedText||m.originalText):m.originalText)}</div>
+          ${act}
+          <div class="msg-time">${fmt(m.createdAt)}</div>
+        </div>`;
+    }).join("");
   });
 }
 
-// ══════════════════════════════════════════
-//  TABS
-// ══════════════════════════════════════════
-function sw(v) {
-  curView = v;
-  document.querySelectorAll('.view').forEach(x => x.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
-  const vmap = {a:'vA', b:'vB', adm:'vAdm'};
-  const tmap = {a:'tabA', b:'tabB', adm:'tabAdm'};
-  document.getElementById(vmap[v]).classList.add('active');
-  document.getElementById(tmap[v]).classList.add('active');
-  // clear badge
-  const bmap = {a:'bdgA', b:'bdgB', adm:'bdgAdm'};
-  const b = document.getElementById(bmap[v]);
-  b.textContent = ''; b.classList.remove('on');
+window.switchTab=function(tab,roomId){ adminTab=tab; renderAdminMsgs(roomId); };
+
+window.adminAct=async function(roomId,msgId,action){
+  const el=document.getElementById("e-"+msgId);
+  await update(ref(db,"rooms/"+roomId+"/messages/"+msgId),{
+    status:action, modifiedText:el?el.value.trim():"", reviewedAt:Date.now()
+  });
+  toast(action==="approved"?"✓ تم إرسال الرسالة":"✗ تم رفض الرسالة", action==="approved"?"success":"error");
+};
+
+// PARTY
+function enterRoom(roomId, role){
+  const unsub=onValue(ref(db,"rooms/"+roomId), snap=>{
+    if(!snap.exists()||snap.val().status==="closed"){
+      clearAll(); show("screen-closed"); return;
+    }
+    if(snap.val().status==="active" && !partyReady){
+      partyReady=true;
+      const badge=document.getElementById("party-badge");
+      badge.textContent=role==="party_a"?"👤 الطرف الأول":"👥 الطرف الثاني";
+      badge.className="badge "+(role==="party_a"?"pa":"pb");
+      show("screen-party");
+      initParty(roomId,role);
+    }
+  });
+  listeners.push(unsub);
 }
 
-function updateBadge(v) {
-  if (curView === v) return;
-  const bmap = {a:'bdgA', b:'bdgB', adm:'bdgAdm'};
-  const b = document.getElementById(bmap[v]);
-  const cnt = v === 'adm' ? queue.length : msgs.filter(m => m.visibleTo.includes(v) && m.status==='approved' && m.from !== v).length;
-  if (cnt > 0) { b.textContent = cnt; b.classList.add('on'); }
+function initParty(roomId, role){
+  const isA=role==="party_a";
+  document.getElementById("party-main").innerHTML=`
+    <div class="compose-box">
+      <div class="compose-title">✉️ رسالة إلى ${isA?"الطرف الثاني":"الطرف الأول"}</div>
+      <textarea class="compose-ta" id="msg-input" placeholder="اكتب رسالتك هنا..."></textarea>
+      <button class="send-btn ${isA?"a":"b"}" id="send-btn" onclick="sendMsg('${roomId}','${role}')">➤ إرسال للمشرف</button>
+    </div>
+    <div class="notice">📋 رسائلك تصل للمشرف أولاً قبل إرسالها</div>
+    <div class="sec-lbl">📥 الرسائل الواردة</div>
+    <div class="msg-list" id="inbox"></div>
+    <div class="sec-lbl">📤 رسائلك المُرسلة</div>
+    <div class="msg-list" id="outbox"></div>`;
+
+  const unsub=onValue(ref(db,"rooms/"+roomId+"/messages"), snap=>{
+    const inbox=[],outbox=[];
+    snap.forEach(c=>{
+      const m={id:c.key,...c.val()};
+      if(m.senderId===role) outbox.push(m);
+      if(m.receiverId===role&&m.status==="approved") inbox.push(m);
+    });
+    inbox.sort((a,b)=>b.createdAt-a.createdAt);
+    outbox.sort((a,b)=>b.createdAt-a.createdAt);
+    const inEl=document.getElementById("inbox");
+    const outEl=document.getElementById("outbox");
+    if(!inEl) return;
+    inEl.innerHTML=inbox.length?inbox.map(m=>`
+      <div class="msg-card approved">
+        <div class="msg-header">
+          <div class="msg-from"><div class="dot ${m.senderId==="party_a"?"a":"b"}"></div><span>${m.senderId==="party_a"?"الطرف الأول":"الطرف الثاني"}</span></div>
+          <span class="msg-status approved">✓ وصلك</span>
+        </div>
+        <div class="msg-text">${esc(m.modifiedText||m.originalText)}</div>
+        <div class="msg-time">${fmt(m.createdAt)}</div>
+      </div>`).join("")
+    :`<div class="empty"><div class="empty-icon">📭</div><div class="empty-text">لا توجد رسائل واردة</div></div>`;
+    outEl.innerHTML=outbox.length?outbox.map(m=>{
+      const sl={pending:"⏳ انتظار المشرف",approved:"✓ تم الإرسال",rejected:"✗ مرفوض"};
+      return `
+        <div class="msg-card ${m.status}">
+          <div class="msg-header">
+            <div class="msg-from"><div class="dot ${isA?"a":"b"}"></div><span>أنت</span></div>
+            <span class="msg-status ${m.status}">${sl[m.status]||m.status}</span>
+          </div>
+          <div class="msg-text">${esc(m.originalText)}</div>
+          <div class="msg-time">${fmt(m.createdAt)}</div>
+        </div>`; }).join("")
+    :`<div class="empty"><div class="empty-icon">📮</div><div class="empty-text">لم ترسل رسائل بعد</div></div>`;
+  });
+  listeners.push(unsub);
 }
 
-// ══════════════════════════════════════════
-//  HELPERS
-// ══════════════════════════════════════════
-function mk(from, text, status, visibleTo) {
-  return { id:++uid, from, text, origText:text, edited:false,
-           time:tstr(), status, visibleTo };
-}
+window.sendMsg=async function(roomId,role){
+  const input=document.getElementById("msg-input");
+  const text=input.value.trim();
+  if(!text) return;
+  const btn=document.getElementById("send-btn");
+  btn.disabled=true; btn.textContent="جاري الإرسال...";
+  try{
+    await push(ref(db,"rooms/"+roomId+"/messages"),{
+      senderId:role, receiverId:role==="party_a"?"party_b":"party_a",
+      originalText:text, modifiedText:text, status:"pending", createdAt:Date.now()
+    });
+    input.value="";
+    toast("✓ تم الإرسال - بانتظار المشرف","success");
+  }catch(e){ toast("خطأ: "+e.message,"error"); }
+  btn.disabled=false; btn.textContent="➤ إرسال للمشرف";
+};
 
-function cls(from, mine) {
-  const map = {
-    a:   { ac:'ava-a',   bc: mine?'bbl-me-a':'bbl-a',     sc:'sna',   av: N.a  ?N.a.charAt(0):'أ' },
-    b:   { ac:'ava-b',   bc: mine?'bbl-me-b':'bbl-b',     sc:'snb',   av: N.b  ?N.b.charAt(0):'ب' },
-    adm: { ac:'ava-adm', bc: mine?'bbl-me-adm':'bbl-adm', sc:'snadm', av:'🛡'  },
-  };
-  return map[from] || map.adm;
-}
-
-function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
-function tstr() { return new Date().toLocaleTimeString('ar-SA',{hour:'2-digit',minute:'2-digit'}); }
-function esc(t) { return (t||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>'); }
-
-function hk(e, from) {
-  if (e.key==='Enter' && !e.shiftKey) {
-    e.preventDefault();
-    if (from==='adm') openTarget();
-    else send(from);
-  }
-}
-
-function ar(el) {
-  el.style.height = 'auto';
-  el.style.height = Math.min(el.scrollHeight, 110) + 'px';
-}
-
-let tt;
-function toast(msg) {
-  const el = document.getElementById('toast');
-  el.textContent = msg; el.classList.add('on');
-  clearTimeout(tt);
-  tt = setTimeout(() => el.classList.remove('on'), 2500);
-}
+// INIT
+const saved=getSaved();
+if(saved?.apiKey&&saved?.databaseURL){
+  document.getElementById("cfg-key").value=saved.apiKey;
+  document.getElementById("cfg-url").value=saved.databaseURL;
+  document.getElementById("cfg-pid").value=saved.projectId||"";
+  boot(saved);
+} else { show("screen-config"); }
 </script>
 </body>
 </html>
